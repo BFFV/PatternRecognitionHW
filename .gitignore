@@ -3,8 +3,18 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# PyCharm
+# PyCharm & Others
+*.DS_STORE
 *.idea
+
+# T2
+T2/Testing_0/
+T2/Testing_1/
+T2/Training_0/
+T2/Training_1/
+
+# Notes
+*/Notas.txt
 
 # C extensions
 *.so
