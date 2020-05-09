@@ -1,12 +1,12 @@
 - Librerías Utilizadas:
 	- numpy
-	- collections
 	- opencv (cv2)
-	- math
-	- pandas
+	- PIL
 	- seaborn
 	- matplotlib
+	- pybalu
+	- sklearn
 
 - Se debe ejecutar solamente el archivo 'main.py' (autocontenido).
-- La ejecución debería tardar alrededor de 1-2 minutos.
-- Se obtuvo el 100% de exactitud.
+- La ejecución debería tardar alrededor de X minutos.
+- Se obtuvo el Y% de exactitud.
