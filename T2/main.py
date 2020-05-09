@@ -9,9 +9,9 @@ from utils import accuracy
 
 # Training: Feature Extraction
 print('Training...')
-X0_train = extract_features('Training_0', 'png')
+X0_train = extract_features('Training_0', 'png')  # Edit
 print('Training..')
-X1_train = extract_features('Training_1', 'png')
+X1_train = extract_features('Training_1', 'png')  # Edit
 
 # Training: Data Set
 print('Training Subset:')
@@ -37,16 +37,16 @@ print(f'        normalized features: {X_train_norm.shape[1]} '
 
 # Training: Feature Selection
 print('Selecting Features...')
-s_sfs = sfs(X_train_norm, d_train, n_features=20)
+s_sfs = sfs(X_train_norm, d_train, n_features=50)
 X_train_sfs = X_train_norm[:, s_sfs]
 print(f'          selected features: {X_train_sfs.shape[1]} '
       f'({X_train_sfs.shape[0]} samples)')
 
 # Testing: Feature Extraction
 print('Testing...')
-X0_test = extract_features('Testing_0', 'png')
+X0_test = extract_features('Testing_0', 'png')  # Edit
 print('Testing..')
-X1_test = extract_features('Testing_1', 'png')
+X1_test = extract_features('Testing_1', 'png')  # Edit
 
 # Testing: Data Set
 print('Testing Subset:')

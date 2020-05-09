@@ -15,6 +15,7 @@ def get_image(path, show=False):
     return img
 
 
+# Edit
 def extract_features_img(st):
     img = get_image(st)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -27,6 +28,7 @@ def extract_features_img(st):
     return features
 
 
+# Edit
 def extract_features(dir_path, fmt):
     st = '*.' + fmt
     img_names = dir_files(dir_path + '/', st)
