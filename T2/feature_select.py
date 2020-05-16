@@ -33,7 +33,10 @@ def fisher_score(features, classification):
         # Between class covariance
         difference = (class_mean - class_centroid).reshape((n_features, 1))
         cov_between += p[c] * difference @ difference.T
-    return np.trace(np.linalg.inv(cov_within) @ cov_between)  # Spur
+    try:
+        return np.trace(np.linalg.inv(cov_within) @ cov_between)  # Spur
+    except np.linalg.LinAlgError:  # Singular Matrix
+        return - np.inf
 
 
 # Sequential Forward Selection

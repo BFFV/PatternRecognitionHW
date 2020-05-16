@@ -11,7 +11,7 @@ This module contains utilities for evaluation & visualization.
 """""
 
 
-# Shows an image
+# Displays an image
 def show_image(img):
     pil_image = Image.fromarray(img)
     pil_image.show()

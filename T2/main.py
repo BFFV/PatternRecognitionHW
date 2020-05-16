@@ -9,13 +9,13 @@ from utils import accuracy
 
 # Train or load from data file
 
-load = False
+load = True
 data_file_0 = 'X0_train.npy'
 data_file_1 = 'X1_train.npy'
 
-# Selected Features (lbp, hog, haralick)
+# Selected Features (lbp, hog, haralick, gabor)
 
-selected_features = ['hog']
+selected_features = ['lbp', 'haralick']
 
 # Number of Features (maximum 50)
 
@@ -93,7 +93,7 @@ print(f'    clean+norm+selected features: {X_test_sfs.shape[1]} '
 
 # Classification
 print('Classifying...')
-knn = KNeighborsClassifier(n_neighbors=3)
+knn = KNeighborsClassifier(n_neighbors=3)  # kNN (k=3)
 knn.fit(X_train_sfs, d_train)
 ds = knn.predict(X_test_sfs)
 accuracy(ds, d_test, 'Finished!')

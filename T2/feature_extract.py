@@ -1,7 +1,8 @@
 import numpy as np
 import cv2
-from pybalu.feature_extraction import lbp_features, hog_features, \
-    haralick_features
+from skimage.feature import hog
+from pybalu.feature_extraction import lbp_features, haralick_features, \
+    gabor_features
 from utils import show_image, dir_files
 
 """""
@@ -9,6 +10,7 @@ This module contains functions for feature extraction.
 """""
 
 
+# Reads an image
 def get_image(path, show=False):
     img = cv2.imread(path)
     if show:
@@ -31,17 +33,28 @@ def extract_features_img(image, selected):
             img[:, :, 2], hdiv=1, vdiv=1, mapping='nri_uniform')
         lbp = np.concatenate((lbp_gray, lbp_red, lbp_green, lbp_blue))
         features = np.concatenate((features, lbp))
-    if 'hog' in selected:  # Histogram of Gradients
-        hog = hog_features(gray, v_windows=1, h_windows=1, n_bins=8)
-        features = np.concatenate((features, hog))
+    if 'hog' in selected:  # Histogram of Gradients (Gray + RGB)
+        hog_gray = hog(gray, orientations=16, pixels_per_cell=(64, 64),
+                       cells_per_block=(1, 1))
+        hog_red = hog(img[:, :, 0], orientations=16, pixels_per_cell=(64, 64),
+                      cells_per_block=(1, 1))
+        hog_green = hog(img[:, :, 1], orientations=16, pixels_per_cell=(64, 64),
+                        cells_per_block=(1, 1))
+        hog_blue = hog(img[:, :, 2], orientations=16, pixels_per_cell=(64, 64),
+                       cells_per_block=(1, 1))
+        hog_features = np.concatenate((hog_gray, hog_red, hog_green, hog_blue))
+        features = np.concatenate((features, hog_features))
     if 'haralick' in selected:  # Haralick Textures (Gray + RGB)
-        haralick_gray = haralick_features(gray, distance=2)
-        haralick_red = haralick_features(img[:, :, 0], distance=2)
-        haralick_green = haralick_features(img[:, :, 1], distance=2)
-        haralick_blue = haralick_features(img[:, :, 2], distance=2)
+        haralick_gray = haralick_features(gray, distance=3)
+        haralick_red = haralick_features(img[:, :, 0], distance=3)
+        haralick_green = haralick_features(img[:, :, 1], distance=3)
+        haralick_blue = haralick_features(img[:, :, 2], distance=3)
         haralick = np.concatenate(
             (haralick_gray, haralick_red, haralick_green, haralick_blue))
         features = np.concatenate((features, haralick))
+    if 'gabor' in selected:  # Gabor Features
+        gabor = gabor_features(gray, rotations=4, dilations=4)
+        features = np.concatenate((features, gabor))
     return features
 
 

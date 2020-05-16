@@ -6,8 +6,11 @@
 	- matplotlib
 	- pybalu
 	- sklearn
+	- skimage
+	- os
+	- fnmatch
 
 - Se debe ejecutar solamente el archivo 'main.py' (autocontenido).
-- La ejecución debería tardar alrededor de X minutos.
-- Se obtuvo el Y% de exactitud.
+- La ejecución debería tardar alrededor de 45 - 90 segundos (cargando los datos de training desde los archivos).
+- Se obtuvo el 98.05% de exactitud.
 - Probado con Python 3.8 en Ubuntu Linux.
