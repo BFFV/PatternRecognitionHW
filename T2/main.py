@@ -7,11 +7,32 @@ from feature_select import sfs
 from utils import accuracy
 
 
+# Train or load from data file
+
+load = False
+data_file_0 = 'X0_train.npy'
+data_file_1 = 'X1_train.npy'
+
+# Selected Features (lbp, hog, haralick)
+
+selected_features = ['hog']
+
+# Number of Features (maximum 50)
+
+n_features = 50
+
 # Training: Feature Extraction
 print('Training...')
-X0_train = extract_features('Training_0', 'png')  # Edit
-print('Training..')
-X1_train = extract_features('Training_1', 'png')  # Edit
+if load:  # Load extracted features from data file
+    X0_train = np.load(data_file_0)
+    print('Training..')
+    X1_train = np.load(data_file_1)
+else:  # Extract features from all images & save the data
+    X0_train = extract_features('Training_0', 'png', selected_features)
+    np.save('X0_train.npy', X0_train)
+    print('Training..')
+    X1_train = extract_features('Training_1', 'png', selected_features)
+    np.save('X1_train.npy', X1_train)
 
 # Training: Data Set
 print('Training Subset:')
@@ -37,16 +58,17 @@ print(f'        normalized features: {X_train_norm.shape[1]} '
 
 # Training: Feature Selection
 print('Selecting Features...')
-s_sfs = sfs(X_train_norm, d_train, n_features=50)
+s_sfs = sfs(
+      X_train_norm, d_train, n_features=min(X_train_norm.shape[1], n_features))
 X_train_sfs = X_train_norm[:, s_sfs]
 print(f'          selected features: {X_train_sfs.shape[1]} '
       f'({X_train_sfs.shape[0]} samples)')
 
 # Testing: Feature Extraction
 print('Testing...')
-X0_test = extract_features('Testing_0', 'png')  # Edit
+X0_test = extract_features('Testing_0', 'png', selected_features)
 print('Testing..')
-X1_test = extract_features('Testing_1', 'png')  # Edit
+X1_test = extract_features('Testing_1', 'png', selected_features)
 
 # Testing: Data Set
 print('Testing Subset:')

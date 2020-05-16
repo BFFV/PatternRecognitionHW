@@ -11,21 +11,19 @@ This module contains utilities for evaluation & visualization.
 """""
 
 
+# Shows an image
 def show_image(img):
     pil_image = Image.fromarray(img)
     pil_image.show()
 
 
+# Obtains all images in path with a specific format
 def dir_files(img_path, img_ext):
     img_names = fnmatch.filter(sorted(os.listdir(img_path)), img_ext)
     return img_names
 
 
-def num2fix_str(x, d):
-    st = '%0*d' % (d, x)
-    return st
-
-
+# Calculates accuracy & displays confusion matrix
 def accuracy(ys, y, st):
     print(st)
     if y.shape[1] > y.shape[0]:
@@ -48,6 +46,6 @@ def accuracy(ys, y, st):
     heatmap(c, annot=True, fmt="d", cmap="YlGnBu")
     plt.xlim(0, nm)
     plt.ylim(nm, 0)
-    plt.title('Confusion Matrix ' + st, fontsize=14)
+    plt.title('Confusion Matrix', fontsize=14)
     plt.show()
     return acc

@@ -2,6 +2,7 @@ import numpy as np
 
 """""
 This module contains functions for feature selection.
+(Based on the pybalu implementation: https://github.com/mbucchi/pybalu)
 """""
 
 

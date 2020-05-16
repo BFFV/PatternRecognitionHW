@@ -10,3 +10,4 @@
 - Se debe ejecutar solamente el archivo 'main.py' (autocontenido).
 - La ejecución debería tardar alrededor de X minutos.
 - Se obtuvo el Y% de exactitud.
+- Probado con Python 3.8 en Ubuntu Linux.
