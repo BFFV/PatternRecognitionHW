@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Virtual Environment
+venv/
+
 # PyCharm & Others
 *.DS_STORE
 *.idea
