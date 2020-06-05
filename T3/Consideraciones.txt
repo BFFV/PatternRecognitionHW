@@ -1,0 +1,18 @@
+- Librerías Utilizadas:
+	- pybalu
+	- numpy
+	- opencv (cv2)
+	- PIL
+	- seaborn
+	- matplotlib
+	- sklearn
+	- skimage
+	- os
+	- fnmatch
+
+- Se debe ejecutar solamente el archivo 'main.py' (autocontenido).
+- Los datos de entrenamiento de cada clase n deben estar presentes en la ruta './data/train/class_n'.
+- Los datos de testing de cada clase n deben estar presentes en la ruta './data/test/class_n'.
+- La ejecución debería tardar alrededor de X segundos (cargando los datos de training desde los archivos).
+- Se obtuvo el Y% de exactitud.
+- Probado con Python 3.8 en Ubuntu Linux.
