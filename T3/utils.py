@@ -46,6 +46,6 @@ def accuracy(ys, y, st):
     heatmap(c, annot=True, fmt="d", cmap="YlGnBu")
     plt.xlim(0, nm)
     plt.ylim(nm, 0)
-    plt.title('Confusion Matrix', fontsize=14)
+    plt.title(st, fontsize=14)
     plt.show()
     return acc
