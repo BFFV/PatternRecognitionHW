@@ -9,20 +9,26 @@ from utils import accuracy
 
 # Train or load from data file
 
-load = False
+load = True
 data_file_0 = 'X0_train.npy'  # Normal
 data_file_1 = 'X1_train.npy'  # Pneumonia
 data_file_2 = 'X2_train.npy'  # COVID19
 
 # Image Classification Strategy
 
-# Features to extract (features)
-selected_features = ['lbp']
+# Features to extract (gabor, haralick, hog, lbp)
+selected_features = ['gabor', 'haralick', 'hog', 'lbp']
 
-# Selection/Transformation steps
-processing_strategy = [['sfs', {'n_features': 50, 'method': 'fisher'}]]
+# Selection/Transformation steps (sfs, mutual_info, pca)
+# sfs => n_features: int, method: 'fisher', 'sp100'
+# mutual_info => n_features: int, n_neighbors: int
+# pca => n_components: int, energy: float in [0,1]
+processing_strategy = [
+    ['mutual_info', {'n_features': 100, 'n_neighbors': 3}],
+    ['sfs', {'n_features': 80, 'method': 'fisher'}]]
 
-# Classifier to use
+# Classifier to use (knn)
+# knn => n_neighbors: int
 classifier = ['knn', {'n_neighbors': 3}]
 
 # Training: Feature Extraction
@@ -70,14 +76,16 @@ print(f'        normalized features: {X_train_norm.shape[1]} '
 print('Selecting/Transforming Features...')
 X_train_final = X_train_norm
 for index, step in enumerate(processing_strategy):
-    if step[0] in ['sfs']:
+    if step[0] in ['sfs', 'mutual_info']:  # Selection
         step[1]['n_features'] = \
             min(X_train_final.shape[1], step[1]['n_features'])
         output = select_features(X_train_final, d_train, step[0], step[1])
         X_train_final = X_train_final[:, output]
         processing_strategy[index].append(output)
-    else:
-        output = transform_features(step[0], step[1])
+    else:  # Transformation
+        step[1]['n_components'] = \
+            min(X_train_final.shape[1], step[1]['n_components'])
+        output = transform_features(X_train_final, step[0], step[1])
         X_train_final = output[0]
         processing_strategy[index].append(output[1])
 print(f'          selected/transformed features: {X_train_final.shape[1]} '
@@ -115,10 +123,10 @@ X_test_norm = X_test_clean * a + b
 print('Selecting/Transforming Features...')
 X_test_final = X_test_norm
 for index, step in enumerate(processing_strategy):
-    if step[0] in ['sfs']:
+    if step[0] in ['sfs', 'mutual_info']:  # Selection
         selected = step[2]
         X_test_final = X_test_final[:, selected]
-    elif step[0] == 'pca':
+    elif step[0] == 'pca':  # PCA
         params = step[2]
         X_test_final = np.matmul(X_test_final - params['Xm'], params['A'])
 print(f'    clean+norm+selected/transformed features: {X_test_final.shape[1]} '
