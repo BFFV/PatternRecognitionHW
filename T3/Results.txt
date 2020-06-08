@@ -1,0 +1,37 @@
+***Implementation Details & Results***
+
+Features:
+
+* LBP: Local Binary Patterns, concatenation of all 4 variants (default, rotational invariant, uniform, nri_uniform).
+* HoG: Histogram of Gradients with 16 orientations and 1 cell (the entire image).
+* Haralick: Haralick Textures, using distance=1.
+* Gabor: Gabor Features, considering 8 rotations and 8 dilations.
+
+Selection:
+
+* MI_n: Mutual Information, keep 'n' best scored features considering n_neighbors=3.
+* SFS_n: Sequential Forward Selection, obtain 'n' best features with fisher score.
+
+Transformation:
+
+* PCA_n: Principal Component Analysis, obtain 'n' principal components.
+
+Classifiers:
+
+* SVM: Support Vector Machine, using C=1 and kernel='rbf'.
+* NN: Neural Network (Multi Layer Perceptron), using 2 hidden layers of size 50 each, 
+activation function 'relu', max amount of iterations at 2000 and random_state=1 (for consistent testing).
+* RandomForest: Random Forest, using 1000 estimators, entropy criterion, unlimited max_depth and 
+random_state=1 (for consistent testing).
+
+Tested Strategies:
+
+1) (LBP + HoG + Haralick + Gabor) => MI_100 => SFS_24 => SVM: Patches Accuracy -> 95.47%, Patients Accuracy -> 97.61%
+2) (LBP + HoG + Haralick + Gabor) => MI_100 => SFS_24 => NN: Patches Accuracy -> 95.23%, Patients Accuracy -> 97.61%
+3) (LBP + HoG + Haralick + Gabor) => MI_100 => SFS_24 => RandomForest: Patches Accuracy -> 94.84%, Patients Accuracy -> 96.82%
+4) (LBP + HoG + Haralick + Gabor) => SFS_50 => PCA_30 => SFS_24 => SVM: Patches Accuracy -> 93.73%, Patients Accuracy -> 96.82%
+5) (LBP + HoG + Haralick + Gabor) => SFS_50 => PCA_30 => SFS_24 => NN: Patches Accuracy -> 94.2%, Patients Accuracy -> 97.61%
+
+Final Strategy:
+
+(LBP + HoG + Haralick + Gabor) => SFS_24 => PCA_20 => NN: Patches Accuracy -> 95.71%, Patients Accuracy -> 100%

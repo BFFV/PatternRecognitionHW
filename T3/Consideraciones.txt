@@ -13,6 +13,6 @@
 - Se debe ejecutar solamente el archivo 'main.py' (autocontenido).
 - Los datos de entrenamiento de cada clase n deben estar presentes en la ruta './data/train/class_n'.
 - Los datos de testing de cada clase n deben estar presentes en la ruta './data/test/class_n'.
-- La ejecución debería tardar alrededor de 70-80 segundos (cargando los datos de training desde los archivos).
+- La ejecución debería tardar alrededor de 70-90 segundos (cargando los datos de training desde los archivos).
 - Se obtuvo el 95.71% y 100% de exactitud en los clasificadores de patches individuales y agrupados, respectivamente.
 - Probado con Python 3.8 en Ubuntu Linux.
