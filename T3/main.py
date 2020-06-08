@@ -20,16 +20,45 @@ data_file_2 = 'X2_train.npy'  # COVID19
 selected_features = ['gabor', 'haralick', 'hog', 'lbp']
 
 # Selection/Transformation steps (sfs, mutual_info, pca)
-# sfs => n_features: int, method: 'fisher', 'sp100'
+# sfs => n_features: int, method: ('fisher', 'sp100')
 # mutual_info => n_features: int, n_neighbors: int
 # pca => n_components: int, energy: float in [0,1]
-processing_strategy = [
-    ['mutual_info', {'n_features': 100, 'n_neighbors': 3}],
-    ['sfs', {'n_features': 80, 'method': 'fisher'}]]
 
-# Classifier to use (knn)
-# knn => n_neighbors: int
-classifier = ['knn', {'n_neighbors': 3}]
+strategy_1 = [  # SFS + MI
+    ['mutual_info', {'n_features': 100, 'n_neighbors': 3}],
+    ['sfs', {'n_features': 24, 'method': 'fisher'}]]
+strategy_2 = [  # SFS + PCA
+    ['sfs', {'n_features': 50, 'method': 'fisher'}],
+    ['pca', {'n_components': 30}],
+    ['sfs', {'n_features': 24, 'method': 'fisher'}]]
+strategy_3 = [  # Best Combination
+    ['sfs', {'n_features': 24, 'method': 'fisher'}],
+    ['pca', {'n_components': 20}]]
+
+processing_strategy = strategy_3
+
+# Classifier to use (knn, dmin, lda, svm, nn, random_forest, adaboost)
+# knn => n_neighbors: int, weights: ('uniform', 'distance')
+# dmin => no params
+# lda => no params
+# svm => C: float, kernel: ('linear', 'poly', 'rbf', 'sigmoid')
+# nn => hidden_layer_sizes: (size_1, size_2),
+# activation: ('identity', 'logistic', 'tanh', 'relu'), max_iter: int
+# random_forest => n_estimators: int, criterion: ('gini', 'entropy'),
+# max_depth: int/None
+# adaboost => n_estimators: int, learning_rate: float
+
+classifier_1 = ['svm', {'C': 1, 'kernel': 'rbf'}]
+classifier_2 = ['nn', {'hidden_layer_sizes': (50, 50), 'activation': 'relu',
+                       'max_iter': 2000, 'random_state': 1}]
+classifier_3 = ['random_forest', {'n_estimators': 1000, 'criterion': 'entropy',
+                                  'max_depth': None, 'random_state': 1}]
+# classifier_4 = ['knn', {'n_neighbors': 10, 'weights': 'distance'}]
+# classifier_5 = ['dmin', {}]
+# classifier_6 = ['lda', {}]
+# classifier_7 = ['adaboost', {'n_estimators': 1000, 'learning_rate': 1}]
+
+classifier = classifier_2
 
 # Training: Feature Extraction
 print('Training...')
